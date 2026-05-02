@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Ethara AI — Human Alignment & LLM Training Platforms{% endblock %}
+
+{% block auth_content %}
+<div class="auth-bg">
+  <div class="auth-blob auth-blob-1"></div>
+  <div class="auth-blob auth-blob-2"></div>
+
+  <div class="page-container animate-fade-in" style="max-width: 68rem; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 80vh; padding-top: 4rem; padding-bottom: 4rem;">
+    <!-- Brand Badge -->
+    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(79, 70, 229, 0.06); border: 1px solid rgba(79, 70, 229, 0.12); padding: 0.4rem 1.15rem; border-radius: 999px; margin: 0 auto 1.5rem;" class="animate-fade-in">
+      <span style="font-size: 0.725rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand);">AI Human Alignment</span>
+    </div>
+
+    <!-- Hero Headline -->
+    <h1 class="gradient-text animate-slide-up" style="font-size: 3.5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 1.25rem;">
+      Empowering LLMs through Human-Aligned Datasets
+    </h1>
+    
+    <p class="text-secondary animate-slide-up" style="font-size: 1.15rem; max-width: 44rem; margin: 0 auto 2.5rem; line-height: 1.6; color: var(--text-secondary);">
+      Ethara AI is a Gurgaon-based startup founded by <strong>Mahanaaryaman Scindia</strong> and <strong>Suryansh Rana</strong>. We create human-aligned data for training Large Language Models (LLMs), featuring a vertically integrated workforce of domain experts and annotators for comprehensive fine-tuning, safety, and evaluation.
+    </p>
+
+    <!-- Core CTAs -->
+    <div class="animate-slide-up" style="display: flex; gap: 1.25rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 4.5rem;">
+      <a href="{{ url_for('auth.login') }}" class="btn-primary" style="min-width: 12.5rem; font-size: 1rem; padding: 1.1rem 2.25rem;">
+        Go to Dashboard
+      </a>
+      <a href="{{ url_for('auth.register') }}" class="btn-secondary" style="min-width: 12.5rem; font-size: 1rem; padding: 1.1rem 2.25rem;">
+        Get Started
+      </a>
+    </div>
+
+    <!-- Core Highlights Grid -->
+    <div class="grid-3 animate-slide-up" style="gap: 1.75rem; text-align: left; margin-bottom: 4rem;">
+      <div class="glass" style="padding: 2rem; border-radius: 1.2rem; background: #ffffff;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">🧬</div>
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Alignment & Evaluation</h3>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">We focus on evaluating linguistic accuracy, optimizing safety constraints, and building human-aligned evaluation metrics.</p>
+      </div>
+
+      <div class="glass" style="padding: 2rem; border-radius: 1.2rem; background: #ffffff;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">👨‍💻</div>
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Domain Workforce</h3>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">Vertically integrated teams of subject matter experts, Quality Leads, and Prompt Engineers processing high-fidelity datasets.</p>
+      </div>
+
+      <div class="glass" style="padding: 2rem; border-radius: 1.2rem; background: #ffffff;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">🖥️</div>
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Fine-Tuning & Safety</h3>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">Our rigorous annotation workflows are built directly on our advanced software pipeline, supporting full customization.</p>
+      </div>
+    </div>
+
+    <!-- Footnote Block -->
+    <div class="glass animate-slide-up" style="padding: 1.75rem; border-radius: 1.1rem; background: #ffffff; text-align: center; border-color: rgba(79, 70, 229, 0.08);">
+      <p style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+        <strong>Platform Notice:</strong> Access to this system is securely isolated by authorized team profiles. Contact your site admin to request workspace onboarding parameters or refer to your registered onboarding mail for confirmation.
+      </p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

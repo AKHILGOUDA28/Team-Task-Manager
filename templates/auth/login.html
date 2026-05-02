@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Sign In — Ethara AI{% endblock %}
+
+{% block auth_content %}
+<div class="auth-bg">
+  <div class="auth-blob auth-blob-1"></div>
+  <div class="auth-blob auth-blob-2"></div>
+
+  <div class="animate-fade-in" style="width:100%;max-width:28rem;">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="glow-brand" style="width:4rem;height:4rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);">
+        <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+        </svg>
+      </div>
+      <h1 class="gradient-text" style="font-size:1.875rem;font-weight:700;margin-bottom:0.25rem;">Welcome back</h1>
+      <p class="text-muted text-sm">Sign in to your Ethara AI workspace</p>
+    </div>
+
+    <!-- Card -->
+    <div class="glass rounded-2xl" style="padding:2rem;">
+      <form id="login-form" method="POST" action="{{ url_for('auth.login') }}" style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        {% if error %}
+        <div class="error-box animate-fade-in">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Team Name -->
+        <div>
+          <label class="form-label" for="login-team">Team Name</label>
+          <div class="input-icon-wrap">
+            <svg class="input-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
+            </svg>
+            <input id="login-team" class="input-field pl-10" type="text" name="team_name" placeholder="Your team name" required />
+          </div>
+          <p style="font-size: 0.725rem; color: var(--text-muted); margin-top: 0.25rem;">(As shown in already sent mail)</p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="form-label" for="login-email">Email address</label>
+          <div class="input-icon-wrap">
+            <svg class="input-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+            </svg>
+            <input id="login-email" class="input-field pl-10" type="email" name="email" placeholder="you@ethara.ai" autocomplete="email" required />
+          </div>
+          <p style="font-size: 0.725rem; color: var(--text-muted); margin-top: 0.25rem;">(Use your Ethara AI email id and password)</p>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-icon-wrap">
+            <svg class="input-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <input id="login-password" class="input-field pl-10" type="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          </div>
+        </div>
+
+        <button id="login-submit" type="submit" class="btn-primary w-full" style="margin-top:0.5rem;">
+          Sign In
+        </button>
+
+        <!-- Quick Login Helpers -->
+        <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top: 0.5rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top:1rem;">
+          <p class="text-xs text-center" style="color:var(--text-muted)">Quick Demo Sign-In:</p>
+          <div style="display:flex; gap:0.5rem;">
+            <button type="button" class="btn-secondary w-full" style="font-size:0.75rem; padding:0.5rem;" onclick="autofillLogin('Admin')">Admin Login</button>
+            <button type="button" class="btn-secondary w-full" style="font-size:0.75rem; padding:0.5rem;" onclick="autofillLogin('Member')">Member Login</button>
+          </div>
+        </div>
+      </form>
+
+      <p class="text-center text-sm text-dimmed" style="margin-top:1.5rem;">
+        Don't have an account?
+        <a href="{{ url_for('auth.register') }}" class="text-brand font-medium" style="transition:color 0.2s;">Create one</a>
+      </p>
+
+      <script>
+        function autofillLogin(role) {
+          const teamInput = document.getElementById('login-team');
+          const emailInput = document.getElementById('login-email');
+          const passInput = document.getElementById('login-password');
+
+          if (role === 'Admin') {
+            teamInput.value = 'Ethara AI';
+            emailInput.value = 'admin@ethara.ai';
+            passInput.value = 'admin123';
+          } else {
+            teamInput.value = 'Ethara AI';
+            emailInput.value = 'member@ethara.ai';
+            passInput.value = 'member123';
+          }
+        }
+      </script>
+    </div>
+  </div>
+</div>
+{% endblock %}

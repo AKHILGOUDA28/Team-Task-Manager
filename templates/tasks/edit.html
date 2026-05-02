@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Edit Task — Ethara AI{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <div class="animate-slide-up" style="max-width:36rem;">
+    <div style="margin-bottom:1.5rem;">
+      <a href="{{ url_for('task.tasks') }}" class="text-dimmed text-sm" style="display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1rem;">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        Back to Tasks
+      </a>
+      <h1 class="text-2xl font-bold text-white">Edit Task</h1>
+      <p class="text-muted text-sm" style="margin-top:0.25rem;">{{ task.title }}</p>
+    </div>
+
+    <div class="glass rounded-2xl" style="padding:1.5rem;">
+      <form method="POST" action="{{ url_for('task.edit_task', task_id=task.id) }}" style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        {% if current_user.is_admin %}
+        <div>
+          <label class="form-label" for="edit-title">Task title *</label>
+          <input id="edit-title" class="input-field" type="text" name="title" value="{{ task.title }}" required />
+        </div>
+        <div>
+          <label class="form-label" for="edit-desc">Description</label>
+          <textarea id="edit-desc" class="input-field" name="description" rows="3" style="resize:vertical;">{{ task.description or '' }}</textarea>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label class="form-label" for="edit-project">Project</label>
+            <select id="edit-project" class="input-field" name="project_id">
+              {% for p in projects %}
+              <option value="{{ p.id }}" {{ 'selected' if p.id == task.project_id }}>{{ p.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="edit-assign">Assign to</label>
+            <select id="edit-assign" class="input-field" name="assigned_to">
+              <option value="">Unassigned</option>
+              {% for m in members %}
+              <option value="{{ m.id }}" {{ 'selected' if m.id == task.assigned_to }}>{{ m.name }} ({{ m.role }})</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label class="form-label" for="edit-deadline">Deadline</label>
+            <input id="edit-deadline" class="input-field" type="date" name="deadline" value="{{ task.deadline_str }}" />
+          </div>
+          <div>
+            <label class="form-label" for="edit-priority">Priority</label>
+            <select id="edit-priority" class="input-field" name="priority">
+              {% for p in ['low','medium','high'] %}
+              <option value="{{ p }}" {{ 'selected' if p == task.priority }}>{{ p|capitalize }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% else %}
+        <!-- Member: read-only view -->
+        <div class="glass-strong rounded-xl" style="padding:1rem;">
+          <h3 class="text-white font-semibold" style="margin-bottom:0.25rem;">{{ task.title }}</h3>
+          <p class="text-dimmed text-sm">{{ task.description or 'No description.' }}</p>
+          <div class="text-muted text-xs" style="margin-top:0.5rem;">📁 {{ task.project.name }} · 🗓 {{ task.deadline_str or 'No deadline' }}</div>
+        </div>
+        {% endif %}
+
+        <!-- Status — everyone -->
+        <div>
+          <label class="form-label" for="edit-status">Status</label>
+          <select id="edit-status" class="input-field" name="status">
+            <option value="pending"     {{ 'selected' if task.status == 'pending' }}>⏳ Pending</option>
+            <option value="in-progress" {{ 'selected' if task.status == 'in-progress' }}>🔵 In Progress</option>
+            <option value="done"        {{ 'selected' if task.status == 'done' }}>✅ Done</option>
+          </select>
+        </div>
+
+        <div style="display:flex;gap:0.75rem;margin-top:0.25rem;">
+          <button type="submit" class="btn-primary flex-1">Save Changes</button>
+          <a href="{{ url_for('task.tasks') }}" class="btn-secondary flex-1">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

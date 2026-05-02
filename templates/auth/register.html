@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Create Account — Ethara AI{% endblock %}
+
+{% block auth_content %}
+<div class="auth-bg">
+  <div class="auth-blob auth-blob-1"></div>
+  <div class="auth-blob auth-blob-2"></div>
+
+  <div class="animate-fade-in" style="width:100%;max-width:28rem;">
+    <div class="text-center mb-8">
+      <div class="glow-brand" style="width:4rem;height:4rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);">
+        <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+        </svg>
+      </div>
+      <h1 class="gradient-text" style="font-size:1.875rem;font-weight:700;margin-bottom:0.25rem;">Create account</h1>
+      <p class="text-muted text-sm">Join or create a team workspace</p>
+    </div>
+
+    <div class="glass rounded-2xl" style="padding:2rem;">
+      <form id="signup-form" method="POST" action="{{ url_for('auth.register') }}" style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Name -->
+        <div>
+          <label class="form-label" for="signup-name">Full name</label>
+          <input id="signup-name" class="input-field" type="text" name="name" placeholder="Jane Doe" required />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="form-label" for="signup-email">Email address</label>
+          <input id="signup-email" class="input-field" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="form-label" for="signup-password">Password</label>
+          <input id="signup-password" class="input-field" type="password" name="password" placeholder="Min 6 characters" required />
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label class="form-label" for="signup-role">Role</label>
+          <select id="signup-role" class="input-field" name="role" onchange="updateTeamHint(this.value)">
+            <option value="member">👤 Member — Join an existing team</option>
+            <option value="admin">👑 Admin — Create a new team</option>
+          </select>
+        </div>
+
+        <!-- Team Name -->
+        <div>
+          <label class="form-label" for="signup-team">Team Name</label>
+          <input id="signup-team" class="input-field" type="text" name="team_name" placeholder="Enter team name" required />
+          <p id="team-hint" class="text-xs text-dimmed" style="margin-top:0.4rem;">Enter the exact name of an existing team to join.</p>
+        </div>
+
+        <button id="signup-submit" type="submit" class="btn-primary w-full" style="margin-top:0.5rem;">
+          Create Account
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-dimmed" style="margin-top:1.5rem;">
+        Already have an account?
+        <a href="{{ url_for('auth.login') }}" class="text-brand font-medium">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateTeamHint(role) {
+  document.getElementById('team-hint').textContent = role === 'admin'
+    ? 'This will create a new team workspace for your organisation.'
+    : 'Enter the exact name of an existing team to join.';
+}
+</script>
+{% endblock %}
