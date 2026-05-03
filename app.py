@@ -1,7 +1,10 @@
+import logging
 from flask import Flask
 from flask_login import LoginManager
 from config import Config
 from models import db, User
+
+logging.basicConfig(level=logging.INFO)
 
 # Import blueprints
 from routes.auth import auth_bp
@@ -33,9 +36,14 @@ def create_app():
     app.register_blueprint(task_bp)
     app.register_blueprint(dashboard_bp)
 
-    # Create tables on startup
+    # Create tables on startup (with error handling for transient DB issues)
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            logging.info('Database tables created/verified successfully.')
+        except Exception as e:
+            logging.error(f'Could not connect to database on startup: {e}')
+            logging.error('Check that DATABASE_URL is set correctly in Railway environment variables.')
 
     return app
 
