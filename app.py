@@ -6,7 +6,6 @@ from models import db, User
 
 logging.basicConfig(level=logging.INFO)
 
-# Import blueprints
 from routes.auth import auth_bp
 from routes.project import project_bp
 from routes.task import task_bp
@@ -17,7 +16,6 @@ def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
     app.config.from_object(Config)
 
-    # Extensions
     db.init_app(app)
 
     login_manager = LoginManager()
@@ -30,13 +28,11 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(project_bp)
     app.register_blueprint(task_bp)
     app.register_blueprint(dashboard_bp)
 
-    # Create tables on startup (with error handling for transient DB issues)
     with app.app_context():
         try:
             db.create_all()

@@ -54,7 +54,6 @@ def new_project():
 @project_bp.route('/projects/<int:project_id>')
 @login_required
 def project_detail(project_id):
-    # Security: only same-team projects
     project = Project.query.filter_by(id=project_id, team_id=current_user.team_id).first_or_404()
 
     tasks = Task.query.filter_by(project_id=project_id, team_id=current_user.team_id)\

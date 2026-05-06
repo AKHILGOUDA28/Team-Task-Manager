@@ -27,7 +27,6 @@ def login():
             flash('All fields are required.', 'error')
             return render_template('auth/login.html')
 
-        # Verify team exists
         team = Team.query.filter(
             db.func.lower(Team.name) == team_name.lower()
         ).first()
@@ -35,7 +34,6 @@ def login():
             flash('Team not found. Check your team name.', 'error')
             return render_template('auth/login.html')
 
-        # Verify user belongs to that team
         user = User.query.filter_by(email=email, team_id=team.id).first()
         if not user or not check_password_hash(user.password, password):
             flash('Invalid credentials or you do not belong to this team.', 'error')
@@ -59,7 +57,6 @@ def register():
         role = request.form.get('role', 'member').strip().lower()
         team_name = request.form.get('team_name', '').strip()
 
-        # Basic validations
         if not all([name, email, password, team_name]):
             flash('All fields are required.', 'error')
             return render_template('auth/register.html')
@@ -77,13 +74,12 @@ def register():
             return render_template('auth/register.html')
 
         if role == 'admin':
-            # Admin creates a new team
             if Team.query.filter(db.func.lower(Team.name) == team_name.lower()).first():
                 flash(f'Team "{team_name}" already exists. Choose a different name.', 'error')
                 return render_template('auth/register.html')
             team = Team(name=team_name)
             db.session.add(team)
-            db.session.flush()  # get team.id
+            db.session.flush()
         else:
             # Member joins an existing team
             team = Team.query.filter(

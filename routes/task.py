@@ -40,7 +40,6 @@ def tasks():
     if current_user.is_admin:
         query = Task.query.filter_by(team_id=tid)
     else:
-        # Members see only tasks assigned to them within their team
         query = Task.query.filter_by(team_id=tid, assigned_to=current_user.id)
 
     if project_id:
@@ -95,7 +94,6 @@ def new_task():
             return render_template('tasks/new.html', projects=projects, members=members)
 
         if assigned_to_ids:
-            # Create separate task for each selected member
             for uid in assigned_to_ids:
                 task = Task(
                     title=title, description=description,
@@ -108,7 +106,6 @@ def new_task():
                 db.session.add(task)
             flash(f'Separate tasks created for {len(assigned_to_ids)} members!', 'success')
         else:
-            # Unassigned task
             task = Task(
                 title=title, description=description,
                 status=status, priority=priority,
@@ -132,7 +129,6 @@ def edit_task(task_id):
     tid = current_user.team_id
     task = Task.query.filter_by(id=task_id, team_id=tid).first_or_404()
 
-    # Members can only update status of their own tasks
     if not current_user.is_admin and task.assigned_to != current_user.id:
         flash('You can only edit tasks assigned to you.', 'error')
         return redirect(url_for('task.tasks'))
