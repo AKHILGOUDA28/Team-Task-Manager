@@ -209,6 +209,16 @@
           </form>
         </div>
         {% endif %}
+        
+        {% if not current_user.is_admin %}
+        <div style="margin-top:0.75rem;">
+          {% if task.status == 'done' %}
+          <button type="button" style="width:100%; padding:0.5rem; border-radius:0.5rem; background-color:#10b981; color:white; font-size:0.875rem; font-weight:600; border:none; cursor:default;">Done</button>
+          {% else %}
+          <button type="button" style="width:100%; padding:0.5rem; border-radius:0.5rem; background-color:#ef4444; color:white; font-size:0.875rem; font-weight:600; border:none; cursor:pointer;">Take Task</button>
+          {% endif %}
+        </div>
+        {% endif %}
 
       </div>
       {% endfor %}

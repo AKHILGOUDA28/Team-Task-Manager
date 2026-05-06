@@ -58,7 +58,7 @@
 <!-- Flash messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-  <div style="position:fixed;top:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:0.5rem;min-width:280px;max-width:360px;">
+  <div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:0.5rem;min-width:280px;max-width:360px;">
     {% for category, message in messages %}
     <div class="animate-fade-in" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1rem;border-radius:0.75rem;font-size:0.875rem;
       {% if category=='success' %}background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:#86efac;
@@ -80,7 +80,7 @@
 <!-- Auth layout -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-  <div style="position:fixed;top:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:0.5rem;min-width:280px;max-width:360px;">
+  <div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:0.5rem;min-width:280px;max-width:360px;">
     {% for category, message in messages %}
     <div class="animate-fade-in error-box">{{ message }}</div>
     {% endfor %}
