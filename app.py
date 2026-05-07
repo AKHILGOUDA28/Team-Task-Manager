@@ -40,7 +40,7 @@ def create_app():
             logging.info('Database tables created/verified successfully.')
         except Exception as e:
             logging.error(f'Could not connect to database on startup: {e}')
-            logging.error('Check that DATABASE_URL is set correctly in Railway environment variables.')
+            logging.error('Check that DATABASE_URL is set correctly in Render environment variables.')
 
     return app
 
